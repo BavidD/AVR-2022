@@ -214,8 +214,10 @@ class Sandbox(MQTTModule):
         found_recon_apriltag = False
         if self.autonomous:            
             self.takeoff()
+            time.sleep(1)
             self.land()
-            
+            self.autonomous = False
+    
     # ===============
     # Drone Control Comands
     def move(self, pos: tuple, pathing: bool = False) -> None:
