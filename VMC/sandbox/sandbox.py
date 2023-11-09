@@ -217,6 +217,9 @@ class Sandbox(MQTTModule):
             time.sleep(1)
             self.land()
             self.autonomous = False
+            self.send_message(
+            "avr/autonomous/enable", AvrAutonomousEnablePayload(enabled=False)
+            )
     
     # ===============
     # Drone Control Comands
