@@ -5,7 +5,7 @@ from typing import List
 
 from bell.avr.mqtt.payloads import *
 from PySide6 import QtCore, QtWidgets
-
+import time
 from ..lib.color import wrap_text
 from ..lib.widgets import DoubleLineEdit
 from ..lib.config import config
@@ -279,10 +279,21 @@ class AutonomyWidget(BaseTabWidget):
         """
         Set autonomous mode
         """
+        # self.send_message(
+        #     "avr/autonomous/enable", AvrAutonomousEnablePayload(enabled=state)
+        # )
+
         self.send_message(
-            "avr/autonomous/enable", AvrAutonomousEnablePayload(enabled=state)
+            'avr/fcm/actions', 
+            {'action': 'takeoff', 'payload': {}}
+        )
+        time.wait
+        self.send_message(
+            'avr/fcm/actions',
+            {'action': 'land', 'payload': {}}
         )
 
+        
         if state:
             text = "Autonomous Enabled"
             color = "green"
