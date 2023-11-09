@@ -283,21 +283,19 @@ class AutonomyWidget(BaseTabWidget):
         #     "avr/autonomous/enable", AvrAutonomousEnablePayload(enabled=state)
         # )
 
-        self.send_message(
-            'avr/fcm/actions', 
-            {'action': 'takeoff', 'payload': {}}
-        )
-        time.wait
-        self.send_message(
-            'avr/fcm/actions',
-            {'action': 'land', 'payload': {}}
-        )
-
-        
         if state:
             text = "Autonomous Enabled"
             color = "green"
-        else:
+            self.send_message(
+                'avr/fcm/actions', 
+                {'action': 'takeoff', 'payload': {}}
+            )
+            time.wait(1)
+            self.send_message(
+                'avr/fcm/actions',
+                {'action': 'land', 'payload': {}}
+            )
+    
             text = "Autonomous Disabled"
             color = "red"
 
