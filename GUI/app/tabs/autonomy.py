@@ -185,9 +185,11 @@ class AutonomyWidget(BaseTabWidget):
         """
         Set autonomous mode
         """
-        self.send_message(
-            "avr/autonomous/enable", AvrAutonomousEnablePayload(enabled=state)
-        )
+        self.send_message('/avr/fcm/actions', {"action": "arm","payload": {}})
+        self.send_message('/avr/fcm/actions', {"action": "takeoff","payload": {}})
+        time.sleep(1)
+        self.send_message('/avr/fcm/actions', {"action": "land","payload": {}})
+        self.send_message('/avr/fcm/actions', {"action": "disarm","payload": {}})
 
         if state:
             text = "Autonomous Enabled"
